@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Registration Form</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <style>
+        h2{
+            text-align: center;
+            color: rgb(237, 198, 23);
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 2px;
+            border: 3px solid black;
+            border-radius: 8px;
+            background-color: rgb(36, 126, 161);
+        }
+        .accordian-collapse {
+            transition: height 0.5s ease-in-out, opacity 0.5s ease-in-out !important;
+        }
+
+        button{
+            text-align: center;
+            border-radius: 5px;
+            padding: 3px;
+            font-size: 25px;
+            margin-top: 2px;
+            width: 100%;
+            background-color: rgb(36, 126, 161);
+            color: rgb(237, 198, 23);
+        }
+        #customer{
+           color: rgb(36, 126, 161); 
+        }
+        #txtName, #txtDate, #txtDays, #txtPersons, #optAmount{
+            border-color: rgb(36, 126, 161);
+            color: rgb(36, 126, 161);
+        }
+        #amountBody{
+            text-align: center;
+            color: rgb(36, 126, 161); 
+            font-size: 28px;
+            font-weight: bold;
+            padding-left: 30px;
+        }
+        #note{
+            text-align: center;
+            font-size: 20px;
+        }
+        #regBtn{
+            background-color: rgb(36, 126, 161);
+            color: white;
+            border-radius: 5px;
+            margin-left: 38%;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function RegisterClick(){
+            var advAmount = document.getElementById("optAmount").value;
+
+
+            if(!advAmount || isNaN(advAmount) || Number(advAmount) < 1000){
+                alert("Please enter Advance Amount\n Advance amount is mandatory!!!")
+                return;
+            }
+
+            document.getElementById("lblName").innerHTML = document.getElementById("txtName").value;
+            document.getElementById("lblDate").innerHTML = document.getElementById("txtDate").value;
+            document.getElementById("lblDays").innerHTML = document.getElementById("txtDays").value;
+            document.getElementById("lblPer").innerHTML = document.getElementById("txtPersons").value;
+            
+
+            var roomName = "";
+            var roomCost = 0;
+            var amenityName = "";
+            var amenityCost = 0;
+            var Balance = 0;
+
+            var optDelux = document.getElementById("optDelux");
+            var optSuit = document.getElementById("optSuit");
+            var days = document.getElementById("txtDays").value;
+            
+            
+            if(optDelux.checked){
+                roomName = optDelux.value;
+                roomCost = 2500;
+                
+            }
+            if(optSuit.checked){
+                roomName = optSuit.value;
+                roomCost = 4000;
+            }
+
+            var optAc = document.getElementById("optAc");
+            var optLock = document.getElementById("optLock");
+
+            if(optAc.checked){
+                amenityName += optAc.value + "<br>";
+                amenityCost = 1000;
+                roomCost += amenityCost;
+            }
+            if(optLock.checked){
+                amenityName += optLock.value + "<br>";
+                amenityCost = 300;
+                roomCost += amenityCost;
+            
+            }
+            Balance = (roomCost*days) - advAmount;
+            
+            document.getElementById("lblRoom").innerHTML = roomName;
+            document.getElementById("lblAme").innerHTML = amenityName;
+            document.getElementById("lblAmt").innerHTML = advAmount;
+            document.getElementById("lblBal").innerHTML = Balance;
+
+            
+
+        }   
+    </script>
+</head>
+<body class="container-fluid overflow-auto">
+    <header>
+        <div>
+            <h2>Hotel Registration Form</h2>
+        </div>
+        <div>
+            <img src="../public//images/hotel_banner.jpg" width="100%" height="500px">
+        </div>
+    </header>
+    <section>
+        <div class="accordion accordion-flush" id="hotel">
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <button data-bs-target="#customer" data-bs-toggle="collapse">Customer Info</button>
+                </div>
+                <div class="accordion-collapse collapse " id="customer" data-bs-parent="#hotel">
+                    <div class="accordion-body" id="customerBody">
+                            <div class="custBody">
+                                <div class="row">
+                                    <div class="col-4 ps-5">
+                                        <label for="txtName" class="fw-bold">Customer Name</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text" id="txtName" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-4 ps-5">
+                                        <label for="txtDate" class="fw-bold">Check in Date:</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="date" id="txtDate" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-4 ps-5">
+                                        <label for="txtDays" class="fw-bold">Total No of Days:</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="number" id="txtDays" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-4 ps-5">
+                                        <label for="txtPersons" class="fw-bold">Total No of Persons:</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="number" id="txtPersons" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <button data-bs-target="#room" data-bs-toggle="collapse">Select Room Type</button>
+                </div>
+                <div class="accordion-collapse collapse" id="room" data-bs-parent="#hotel">
+                    <div class="accordion-body" id="roomBody">
+                        <div class="row">
+                            <div class="col text-center">
+                                <img src="../public/images/deluxroom.jpg" width="200" height="200">
+                                <div>
+                                    <input type="radio" id="optDelux" name="delux" class="form-check-input border-black" value="Delux Room"><label class="form-check-label fw-bold">Delux Room &#8377; 2500</label>
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <img src="../public/images/suitroom.jpg" width="200" height="200">
+                                <div>
+                                    <input type="radio" id="optSuit" name="suit" class="form-check-input border-black" value="Suit Room"><label class="form-check-label fw-bold">Suit Room &#8377; 4000</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <button data-bs-target="#amenity" data-bs-toggle="collapse">Select Amenities</button>
+                </div>
+                <div class="accordion-collapse collapse" id="amenity" data-bs-parent="#hotel">
+                    <div class="accordion-body" id="amenityBody">
+                        <div class="row">
+                            <div class="col text-center">
+                                <img src="../public/images/ac.jpg" width="200" height="200">
+                                <div>
+                                    <input type="checkbox" class="form-check-input border-black" id="optAc" value="A/C Room"><label class="form-check-label fw-bold">A/C &#8377; 1000</label>
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <img src="../public/images/locker.jpg" width="200" height="200">
+                                <div>
+                                    <input type="checkbox" class="form-check-input border-black" id="optLock" value="Locker"><label class="form-check-label fw-bold">Locker &#8377; 300</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <button data-bs-target="#amount" data-bs-toggle="collapse">Advance Amount</button>
+                </div>
+                <div class="accordion-collapse collapse" id="amount" data-bs-parent="#hotel">
+                    <div class="accordion-body" id="amountBody">
+                        <div class="row">
+                            <div class="col">
+                                <label class="text-center" for="optAmount">Advance Amount:</label>
+                            </div>
+                            <div class="col">
+                                <input type="number" class="form-control w-50" placeholder="Enter amount" id="optAmount" value="advAmount">
+                            </div>
+                         </div>
+                    </div>
+                    <div id="note">
+                        <label class=" text-danger">Advance is mandatory (1000/-)</label>
+
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button data-bs-target="#summary" data-bs-toggle="modal" onclick="RegisterClick()" id="regBtn" class="w-25">Register</button>
+                <div class="modal fade w-100" id="summary">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3>Customer Details</h3>
+                            </div>
+                            <div class="modal-body ">
+                                <div class="row mt-2">
+                                    <div class="col-4 ps-5">
+                                        <label class="fw-bold">Customer Name</label>
+                                    </div>
+                                    <div class="col-1">:</div>
+                                    <div class="col-7">
+                                        <dd id="lblName"></dd>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-4 ps-5">
+                                        <label class="fw-bold">Check in Date</label>
+                                    </div>
+                                    <div class="col-1">:</div>
+                                    <div class="col-7">
+                                        <dd id="lblDate"></dd>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-4 ps-5">
+                                        <label class="fw-bold">Total no of days</label>
+                                    </div>
+                                    <div class="col-1">:</div>
+                                    <div class="col-7">
+                                        <dd id="lblDays"></dd> 
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-4 ps-5">
+                                        <label class="fw-bold">Total no of Persons</label>
+                                    </div>
+                                    <div class="col-1">:</div>
+                                    <div class="col-7">
+                                        <dd id="lblPer"></dd>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-4 ps-5">
+                                        <label class="fw-bold">Room Type</label>
+                                    </div>
+                                    <div class="col-1">:</div>
+                                    <div class="col-7">
+                                        <dd id="lblRoom"></dd>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-4 ps-5">
+                                        <label class="fw-bold">Amenities</label>
+                                    </div>
+                                    <div class="col-1">:</div>
+                                    <div class="col-7">
+                                        <dd id="lblAme"></dd>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-4 ps-5">
+                                        <label class="fw-bold">Advance Amount</label>
+                                    </div>
+                                    <div class="col-1">:</div>
+                                    <div class="col-7">
+                                        <dd id="lblAmt"></dd>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-4 ps-5">
+                                        <label class="fw-bold">Balance Amount</label>
+                                    </div>
+                                    <div class="col-1">:</div>
+                                    <div class="col-7">
+                                        <dd id="lblBal"></dd>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary w-25" data-bs-dismiss="modal">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                
+    </section>
+</body>
+</html>
